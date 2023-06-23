@@ -33,4 +33,15 @@ form.location {
   width: 100%;
 }
 
+/* Card-deck styling for 5-Day Forecast*/
+.card-deck {
+  background-color: #808080;
+  color: #1E90FF;
+}
+
+.card {
+  background-color: #1E90FF;
+  color: #808080;
+}
+
 
