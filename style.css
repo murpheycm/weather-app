@@ -1,11 +1,11 @@
 h1 {
-  background-image: linear-gradient(to right, blue, black);
-  color: white;
+  background-image: linear-gradient(to right, blue, #1E90FF);
+  color: #F8F8FF;
   text-align: center;
 }
 
 #locationForecast {
-  border: 1px groove black;
+  border: 1px groove #808080;
 }
 
 
