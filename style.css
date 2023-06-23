@@ -28,4 +28,8 @@ h1 {
   }
 }
 
+input.location {
+  border-radius: 50%;
+}
+
 
