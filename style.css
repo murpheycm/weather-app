@@ -28,7 +28,7 @@ h1 {
   }
 }
 
-form.location {
+form #location {
   border-radius: 50%;
   width: 100%;
 }
