@@ -44,4 +44,9 @@ form.location {
   color: #808080;
 }
 
+img {
+  max-width: 100%;
+  height: auto;
+}
+
 
