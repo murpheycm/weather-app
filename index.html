@@ -11,16 +11,19 @@
   <header><h1>Weather Dashboard</h1></header>
   <div class="row">
     <div class="column side">
-      <section class="container" id="sidebar">
-        <h2>City Name: 
-          <input 
-                type="text" 
-                id="location" 
-                name="location"
-                placeholder="Richmond, VA"
-                value="">
-        </h2>
-        <button type="submit" class="btn btn-primary btn-lg" id="searchBtn">Search</button>
+        <form id="sidebar">
+          <label for="location">
+            <h2>City Name: 
+              <input 
+                    type="text" 
+                    id="location" 
+                    name="location"
+                    placeholder="Richmond, VA"
+                    value="">
+            </h2>
+          </label>
+          <input type="submit" class="btn btn-primary btn-lg" id="searchBtn" value="Search">
+        </form>
         <hr style="width:30%;text-align:left;margin-left:0">
         <div class="vstack gap-3">
           <button type="button" class="btn btn-outline-primary btn-lg btn-block">Block level button</button>
