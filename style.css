@@ -42,6 +42,8 @@ form.location {
 .card {
   background-color: #F8F8FF;
   color: #808080;
+  max-width: 25%;
+  height: auto;
 }
 
 img {
