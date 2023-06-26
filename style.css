@@ -44,6 +44,7 @@ form #location {
   color: #808080;
   max-width: 25%;
   height: auto;
+  display: inline-block;
 }
 
 img {
