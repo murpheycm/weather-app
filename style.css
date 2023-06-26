@@ -13,7 +13,7 @@ hr {
 /* Divides the page into columns */
 .column {
   float: left;
-  margin: 20px;
+/*   margin: 20px; */
 }
 
 .column.side {
