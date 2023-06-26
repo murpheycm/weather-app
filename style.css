@@ -7,7 +7,7 @@ h1 {
 /* Divides the page into columns */
 .column {
   float: left;
-  margin: 10px;
+  margin: 20px;
 }
 
 .column.side {
@@ -32,7 +32,6 @@ form #location {
 
 #locationForecast {
   padding: 20px;
-  margin: 10px;
   border: 1px groove #808080;
 }
 
@@ -42,7 +41,8 @@ form #location {
   background-color: #808080;
   color: #F8F8FF;
   padding: 20px;
-  margin: 10px;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .card {
@@ -58,7 +58,7 @@ form #location {
 img {
   max-width: 40%;
   height: auto;
-  display: block;
+/*   display: block; */
   margin-left: auto;
   margin-right: auto;
 }
