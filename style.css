@@ -36,6 +36,12 @@ form #location {
   width: 100%;
 }
 
+#otherLocations {
+  width: 100%;
+  padding: 20px;
+  text-align: center;
+}
+
 #locationForecast {
   padding: 20px;
   border: 1px groove #808080;
