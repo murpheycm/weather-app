@@ -4,6 +4,12 @@ h1 {
   text-align: center;
 }
 
+hr {
+  width:30%;
+  text-align:left;
+  margin-left:0;
+}
+
 /* Divides the page into columns */
 .column {
   float: left;
