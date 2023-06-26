@@ -4,19 +4,14 @@ h1 {
   text-align: center;
 }
 
-#locationForecast {
-  border: 1px groove #808080;
-}
-
 /* Divides the page into columns */
 .column {
   float: left;
+  margin: 10px;
 }
 
 .column.side {
   width: 25%;
-  padding: 10px;
-  margin: 10px;
 }
 
 .column.main {
@@ -33,15 +28,21 @@ h1 {
 form #location {
   border-radius: 2%;
   width: 100%;
-  padding: 5px;
 }
+
+#locationForecast {
+  padding: 20px;
+  margin: 10px;
+  border: 1px groove #808080;
+}
+
 
 /* Card-deck styling for 5-Day Forecast*/
 #fiveDayForecast {
   background-color: #808080;
   color: #F8F8FF;
-  padding: 10px;
-  margin: 5px;
+  padding: 20px;
+  margin: 10px;
 }
 
 .card {
