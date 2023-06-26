@@ -29,7 +29,7 @@ h1 {
 }
 
 form #location {
-  border-radius: 10%;
+  border-radius: 2%;
   width: 100%;
 }
 
@@ -42,13 +42,13 @@ form #location {
 .card {
   background-color: #F8F8FF;
   color: #808080;
-  max-width: 25%;
+  max-width: 15%;
   height: auto;
   display: inline-block;
 }
 
 img {
-  max-width: 10%;
+  max-width: 40%;
   height: auto;
 }
 
