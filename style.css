@@ -45,6 +45,7 @@ form #location {
   max-width: 15%;
   height: auto;
   display: inline-block;
+  margin: 20px;
 }
 
 img {
