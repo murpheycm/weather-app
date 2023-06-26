@@ -58,7 +58,7 @@ form #location {
 img {
   max-width: 40%;
   height: auto;
-/*   display: block; */
+  display: block;
   margin-left: auto;
   margin-right: auto;
 }
