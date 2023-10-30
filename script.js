@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
+$(document).ready(function (){
     const apiKey = '91ca803728e08fcbc1a0d92d460de95f';
     const searchForm = document.getElementById('sidebar');
     const locationInput = document.getElementById('location');
