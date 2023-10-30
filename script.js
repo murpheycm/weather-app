@@ -63,8 +63,8 @@ $(document).ready(function (){
     
     // Render cities
     function renderCities() {
-        for (var i = 0; i < savedCities.length; i++) {
-          city = savedCities[i];
+        for (var i = 0; i < searchHistory.length; i++) {
+          city = searchHistory[i];
           addCity();
         }
       }
@@ -73,7 +73,7 @@ $(document).ready(function (){
       function cities() {
         var storedCities = JSON.parse(localStorage.getItem("cities"));
         if (storedCities !== null) {
-          savedCities = storedCities;
+          searchHistory = storedCities;
           renderCities();
         } else {
           city = "Richmond"
@@ -84,7 +84,7 @@ $(document).ready(function (){
     // Clear Previously Searched cities
     $("#clearBtn").on("click", function () {
         localStorage.clear();
-        savedCities = [];
+        searchHistory = [];
         $("#prevCity").empty();
         city = "";
         init();
