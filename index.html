@@ -28,25 +28,23 @@
           <input id="search" class="form-control col-9" type="search" placeholder="City, State" aria-label="Search">
           <button id="searchBtn" class="btn btn-outline-warning col-3 my-2 my-sm-0" type="submit">Search</button>
         </form>
-        <!-- Past Searches -->
-        <ul id="prevLocation" class="list-group p-2">
-          
-        </ul>
+        <!-- Previous Locations -->
+        <ul id="prevLocation" class="list-group p-2"></ul>
         <button type="button" id="clear" class="btn btn-outline-warning m-2">Clear Past Searches</button>
       </div>
 
       <div class="main-weather p-2 col">
         <div class="container-fluid">
-          <!-- Today Report-->
+          <!-- Today's Report-->
           <div class="report">
-            <h3>Today: </h3>
+            <h3>Today in <span id="location"></span>:</h3>
             <div class="card">
               <div class="card-body row">
                 <div class="col text-center">
                   <img id="today-img" class="img-fluid">
                 </div>
                 <div class="col-9 d-flex flex-column justify-content-around">
-                  <h3 id="location"></h3>
+                  <h3><span id="location"></span></h3>
                   <div>Temperature: <span id="temp"></span></div>
                   <div>Humidity: <span id="hum"></span></div>
                   <div>Wind Speed: <span id="wind"></span></div>
