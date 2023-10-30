@@ -25,6 +25,17 @@ $(document).ready(function (){
         $(`#${i}Date`).text(moment().add(i, 'd').format('dddd, MMMM Do'));
     }
 
+
+    // Search button event listener
+    $("#searchBtn").on("click", function () {
+        event.preventDefault();
+        // Search for a city on click 
+        if ($("#search").val() !== "") {
+          city = $("#search").val().trim();
+        }
+        getToday();
+      });
+
     // Add city
     function addCity() {
         $("#past-searches").prepend($("<button>").attr("type", "button").attr("data-city", city).addClass("past text-muted list-group-item list-group-item-action").text(city));
