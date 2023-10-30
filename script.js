@@ -20,28 +20,25 @@ $(document).ready(function () {
 
   $("#searchBtn").on("click", function () {
     event.preventDefault();
-    // Search for a city on click 
     if ($("#search").val() !== "") {
-      city = $("#search").val().trim();
+      let city = $("#search").val().trim();
     }
     weatherToday();
   });
 
-  // Add city buttons
+  // Add previously searched location buttons to aside
   function addLocation() {
     $("#prevLocation").prepend($("<button>").attr("type", "button").attr("data-city", city).addClass("past text-muted list-group-item list-group-item-action").text(city));
     $("#search").val("");
   }
 
-  // Past search button listen 
-
+  // Previously searched button event listener
   $("#prevLocation").on("click",".past",function () {
     event.preventDefault();
-    city = $(this).attr("data-city");
+    let city = $(this).attr("data-city");
     weatherToday();
   });
 
-  // Check if city has been searched for before
   function reviewPrev () {
     if ( $(`#prevLocation button[data-city="${city}"]`).length ) { 
       $("#search").val("");
@@ -64,7 +61,7 @@ $(document).ready(function () {
       url: apiCurrent,
       method: "GET",
       error: function () {
-        alert("City not found. Please check spelling and search again.");
+        alert("Location not found.");
         $("#search").val("");
       }
     }).then(function (response) {
@@ -72,7 +69,7 @@ $(document).ready(function () {
       weatherId = response.weather[0].id;
       dataCases();
 
-      $("#city").text(response.name);
+      $("#location").text(response.name);
       $("#temp").text(`${response.main.temp} °F`);
       $("#hum").text(`${response.main.humidity} %`);
       $("#wind").text(`${response.wind.speed} MPH`);
@@ -175,14 +172,14 @@ $(document).ready(function () {
       savedLocations = storedLocations;
       renderLocations();
     } else {
-      city = "Richmond"
+      let city = "Richmond"
       reviewPrev();
     }
   }
 
   function renderLocations() {
     for (let i = 0; i < savedLocations.length; i++) {
-      city = savedLocations[i];
+      let city = savedLocations[i];
       addLocation();
     }
   }
@@ -193,7 +190,7 @@ $(document).ready(function () {
     localStorage.clear();
     savedLocations = [];
     $("#prevLocation").empty();
-    city = "Richmond";
+    let city = "Richmond";
     init();
   })
 
