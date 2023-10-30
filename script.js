@@ -44,7 +44,7 @@ $(document).ready(function (){
 
     // Has city been searched before?
     function previousCity () {
-        if ( $(`#past-searches button[data-city="${city}"]`).length ) { 
+        if ( $(`#prevCity button[data-city="${city}"]`).length ) { 
           $("#search").val("");
         } else {
           addCity();
