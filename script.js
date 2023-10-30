@@ -1,143 +1,207 @@
-document.querySelector(".search-column").addEventListener("click", async function (event) {
-    if (event.target.nodeName !== "BUTTON") {
-      return;
-    }
-    let city-name = event.target.getAttribute("data-city-name");
-    if (!city-name) {
-      city-name = document.querySelector("#city-name").value;
-      addCityToStorage(city-name);
-    }
+$(document).ready(function () {
+  const apiKey = "91ca803728e08fcbc1a0d92d460de95f";
+  let city;
+  let weatherId;
+  let weather;
+  let lat;
+  let lon;
+  let uvIndex = "";
+  let uv;
+  let savedLocations= [];
 
-    let coordinatesRequestUrl =
-      "https://api.openweathermap.org/geo/1.0/direct?q=" +
-      city-name +
-      "&limit=1&appid=c4d8aa17891ee763b028f523635c2fad";
-    /*  using fetch we are getting the latitude and longitude
-  of a city.*/
-    /* setting empty string to lat and lon variable so that we can assign the actual data from the api response later */
-    let lat = "";
-    let lon = "";
-    /* 'await' holds the current execution till we get the response back.Once we get the response it moves to next line (which is line 31 here ). 
-  Awaits can only be used inside asynchronous functions */
-    await fetch(coordinatesRequestUrl)
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (data) {
-        if (data && data.length) {
-          lat = data[0].lat;
-          lon = data[0].lon;
-        }
-      });
-    /* using if condition checking if we have a valid lon and lat value and using it to fetch the actual weather details */
+  loadLocations();
 
-    if (lat && lon) {
-      let weatherData = "";
-      let weatherRequestUrl =
-        "https://api.openweathermap.org/data/2.5/forecast?lat=" +
-        lat +
-        "&lon=" +
-        lon +
-        "&appid=c4d8aa17891ee763b028f523635c2fad&units=imperial";
-      await fetch(weatherRequestUrl)
-        .then(function (response) {
-          return response.json();
-        })
-        .then(function (data) {
-          weatherData = data;
-        });
-      /* once we get a valid weather data then query selecting and assigning the values in the elements */
-      if (weatherData) {
-        let currentDayWeather = weatherData.list[0];
-        let temperature = currentDayWeather.main.temp;
-        let wind = currentDayWeather.wind.speed;
-        let humidity = currentDayWeather.main.humidity;
-        let icon = currentDayWeather.weather[0].icon;
-        document.querySelector("#city-name").textContent =
-          city-name + " (" + dayjs().format("MM/DD/YYYY") + ")";
-        document.querySelector("#current-temp").textContent =
-          "Temp: " + temperature + "\xB0 F";
-        document.querySelector("#current-wind").textContent =
-          "Wind: " + wind + " MPH";
-        document.querySelector("#current-humidity").textContent =
-          "Humidity: " + humidity + " %";
-        /* weather api icon url */
-        document.querySelector("#current-weather-image").src =
-          "https://openweathermap.org/img/wn/" + icon + ".png";
-        /* Iterating for next 5 days weather forecast */
-        let cardElement = "";
+  init();
 
-        for (let i = 1; i <= 5; i++) {
-          /* adding one day to current date using "i" */
-          let nextDay = dayjs().add(i, "day");
-          /* Finding the "nextDay" weather by comparing the date from the list using dayjs format function, since the time varies */
-          let nextDateWeather = weatherData.list.find(
-            (eachDay) =>
-              dayjs(eachDay.dt_txt).format("YYYY-M-D") ===
-              nextDay.format("YYYY-M-D")
-          );
-          /* implementation of 5-day weather using Js dynamically */
-          let temperature = nextDateWeather.main.temp;
-          let wind = nextDateWeather.wind.speed;
-          let humidity = nextDateWeather.main.humidity;
-          let icon = nextDateWeather.weather[0].icon;
-          cardElement += `<div class="card col-lg-2 col-sm-12 ms-lg-3 mb-sm-4 custom-card">
-        <div class="card-body card-body-weather">
-          <h4 class="city-name" id="date">(${nextDay.format("M/D/YYYY")})</h4>
-          <img src="${"https://openweathermap.org/img/wn/" + icon + ".png"}" />
-          <p class="city-text">Temp: ${temperature}&deg;F</p>
-          <p class="city-text">Wind: ${wind} MPH</p>
-          <p class="city-text">Humidity: ${humidity} %</p>
-        </div>
-      </div>`;
-        }
-        /* appending the values to HTML div */
-        document.querySelector("#day-wise-section").innerHTML = cardElement;
-      }
+  
+  // SEARCH -----------------------------------------------------------------------
+
+  // Listen for search btn click
+
+  $("#searchBtn").on("click", function () {
+    event.preventDefault();
+    // Search for a city on click 
+    if ($("#search").val() !== "") {
+      city = $("#search").val().trim();
     }
-    document.querySelector(".weather-column").style.display = "block";
+    weatherToday();
   });
 
-/* adding the searched cities to the local storage using */
-function addCityToStorage(city-name) {
-  let availableCity = window.localStorage.getItem("city-name");
-  if (!availableCity) {
-    /* we should place everything in local storage as string so using stringfy! also setting it as an array of string so that it will be easier to push new city names to array */
-    window.localStorage.setItem("city-name", JSON.stringify([city-name]));
-  } else {
-    /* Parse here converts the string to native datatype */
-    let availableCityArray = JSON.parse(availableCity);
-    if (!availableCityArray.includes(city-name)) {
-      availableCityArray.push(city-name);
-    }
-    window.localStorage.setItem("city-name", JSON.stringify(availableCityArray));
+  // Add city buttons
+  function addLocation() {
+    $("#prevLocation").prepend($("<button>").attr("type", "button").attr("data-city", city).addClass("past text-muted list-group-item list-group-item-action").text(city));
+    $("#search").val("");
   }
-  /* first we should write a function 'appendsearchedcity() ' to display the
-  stored local storage city names as a button and then call it here */
-  appendSearchedCity();
-}
 
-function appendSearchedCity() {
-  let availableCity = window.localStorage.getItem("city-name");
+  // Past search button listen 
 
-  if (availableCity) {
-    let availableCityArray = JSON.parse(availableCity);
-    let buttonElement = "";
-    for (let i = 0; i < availableCityArray.length; i++) {
-      /* since we doesnt know the number buttons to be displayed we are trying to append it using dynamic JS */
-      buttonElement += ` <div class="d-grid mb-3">
-    <button
-      class="btn btn-outline-secondary storage-button"
-      type="button" id="searchBtn" data-city-name="${availableCityArray[i]}"
-    >
-      ${availableCityArray[i]}
-    </button>
-  </div>`;
-      /* ${availableCityArray[i]} we have array of city-names in the local storage and setting those names to each button using for loop (i) */
+  $("#prevLocation").on("click",".past",function () {
+    event.preventDefault();
+    city = $(this).attr("data-city");
+    weatherToday();
+  });
+
+  // Check if city has been searched for before
+  function reviewPrev () {
+    if ( $(`#prevLocation button[data-city="${city}"]`).length ) { 
+      $("#search").val("");
+    } else {
+      addLocation();
+      savedLocations.push(city);
+      localStorage.setItem("cities", JSON.stringify(savedLocations))
     }
-    document.querySelector("#search-column").innerHTML = buttonElement;
   }
-}
+  
 
-/* this is called here to display the city names when we reload the page*/
-appendSearchedCity();
+  // TODAY -----------------------------------------------------------------------
+
+
+  // Get today's weather 
+  function weatherToday() {
+    let apiCurrent = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`;
+
+    $.ajax({
+      url: apiCurrent,
+      method: "GET",
+      error: function () {
+        alert("City not found. Please check spelling and search again.");
+        $("#search").val("");
+      }
+    }).then(function (response) {
+      reviewPrev();
+      weatherId = response.weather[0].id;
+      dataCases();
+
+      $("#city").text(response.name);
+      $("#temp").text(`${response.main.temp} °F`);
+      $("#hum").text(`${response.main.humidity} %`);
+      $("#wind").text(`${response.wind.speed} MPH`);
+      $("#today-img").attr("src", `./Assets/${weather}.png`).attr("alt", weather);
+
+      lat = response.coord.lat;
+      lon = response.coord.lon;
+
+      getUV();
+      getFiveDay();
+    });
+  }
+
+  // Get UV
+  function getUV() {
+    $.ajax({
+      url: `https://api.openweathermap.org/data/2.5/uvi?appid=${apiKey}&lat=${lat}&lon=${lon}`,
+      method: "GET"
+    }).then(function (response) {
+      uvIndex = response.value;
+      uvCases();
+      $("#uv").text(uvIndex).css("background-color", uv);
+    })
+  }
+
+  // FIVE DAY -----------------------------------------------------------------------
+
+  
+  function getFiveDay() {
+    let apiFive = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly,minutely,current&appid=${apiKey}&units=imperial`
+    $.ajax({
+      url: apiFive,
+      method: "GET"
+    }).then(function (response) {
+      for (let i = 0; i < 5; i++) {
+        let unixTime = response.daily[i].dt
+        $(`#day${i}`).text(moment.unix(unixTime).format('l'))
+        $(`#temp${i}`).text(`${response.daily[i].temp.day} °F`);
+        $(`#hum${i}`).text(`${response.daily[i].humidity} %`);
+        weatherId = response.daily[i].weather[0].id
+        dataCases();
+        $(`#img${i}`).attr("src", `./Assets/${weather}.png`).attr("alt", weather)
+      }
+    })
+  }
+
+
+  // WEATHER DECODERS -----------------------------------------------------------------------
+
+  // Change img for weather 
+  function dataCases() {
+    switch (true) {
+      case (weatherId > 199 && weatherId < 299):
+        weather = "Thunderstorm";
+        break;
+      case (weatherId > 299 && weatherId < 599):
+        weather = "Rain";
+        break;
+      case (weatherId > 599 && weatherId < 699):
+        weather = "Snow";
+        break;
+      case (weatherId > 699 && weatherId < 799):
+        weather = "Atmostphere";
+        break;
+      case weatherId === 800:
+        weather = "Clear";
+        break;
+      case weatherId > 800:
+        weather = "Clouds"
+    }
+  }
+
+  function uvCases() {
+    uv = "";
+    switch (true) {
+      case (uvIndex >= 0 && uvIndex < 3):
+        uv = "green";
+        break;
+      case (uvIndex >= 3 && uvIndex < 6):
+        uv = "darkkhaki";
+        break;
+      case (uvIndex >= 6 && uvIndex < 8):
+        uv = "orange";
+        break;
+      case (uvIndex >= 8 && uvIndex < 11):
+        uv = "red";
+        break;
+      case (uvIndex >= 11):
+        uv = "violet"
+    }
+  }
+
+
+  // LOCAL STORAGE -----------------------------------------------------------------------
+
+  // Load Cities
+  function loadLocations() {
+    let storedLocations = JSON.parse(localStorage.getItem("cities"));
+    if (storedLocations !== null) {
+      savedLocations = storedLocations;
+      renderLocations();
+    } else {
+      city = "Richmond"
+      reviewPrev();
+    }
+  }
+
+  function renderLocations() {
+    for (let i = 0; i < savedLocations.length; i++) {
+      city = savedLocations[i];
+      addLocation();
+    }
+  }
+
+  // Clear Storage 
+
+  $("#clear").on("click", function () {
+    localStorage.clear();
+    savedLocations = [];
+    $("#prevLocation").empty();
+    city = "Richmond";
+    init();
+  })
+
+  // INIT -----------------------------------------------------------------------
+
+  // Initialize with SD
+  function init() {
+    weatherToday();
+  }
+
+});
