@@ -8,6 +8,7 @@ $(document).ready(function (){
     let locationWind;
     let locationHumidity;
     let fiveDayForecast;
+    let location;
     let searchHistory = [];
 
     cities();
@@ -16,9 +17,9 @@ $(document).ready(function (){
 
     //=================================================//
 
-    // // Today's date
-    // const momentDay = moment().format('dddd, MMMM Do');
-    // $('.todayDate').prepend(momentDay);
+    // Today's date
+    const momentDay = moment().format('dddd, MMMM Do');
+    $('#currentDate').prepend(momentDay);
 
     // // Generate dates for the 5-day forecast
     // for (var i = 1; i < 6; i++) {
