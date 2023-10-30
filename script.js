@@ -41,6 +41,13 @@ $(document).ready(function (){
           localStorage.setItem("cities", JSON.stringify(savedCities))
         }
     }
+
+    // Event listener for previous cities searched buttons
+     $("#prevCity").on("click",".past",function () {
+        event.preventDefault();
+        city = $(this).attr("data-city");
+        getToday();
+      });
     
     // Render cities
     function renderCities() {
