@@ -16,14 +16,14 @@ $(document).ready(function (){
 
     //=================================================//
 
-    // Today's date
-    const momentDay = moment().format('dddd, MMMM Do');
-    $('.todayDate').prepend(momentDay);
+    // // Today's date
+    // const momentDay = moment().format('dddd, MMMM Do');
+    // $('.todayDate').prepend(momentDay);
 
-    // Generate dates for the 5-day forecast
-    for (var i = 1; i < 6; i++) {
-        $(`#${i}Date`).text(moment().add(i, 'd').format('dddd, MMMM Do'));
-    }
+    // // Generate dates for the 5-day forecast
+    // for (var i = 1; i < 6; i++) {
+    //     $(`#${i}Date`).text(moment().add(i, 'd').format('dddd, MMMM Do'));
+    // }
 
 
     // Search button event listener
@@ -48,8 +48,8 @@ $(document).ready(function (){
           $("#search").val("");
         } else {
           addCity();
-          savedCities.push(city);
-          localStorage.setItem("cities", JSON.stringify(savedCities))
+          searchHistory.push(city);
+          localStorage.setItem("cities", JSON.stringify(searchHistory))
         }
     }
 
