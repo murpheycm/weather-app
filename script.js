@@ -38,7 +38,7 @@ $(document).ready(function (){
 
     // Add city
     function addCity() {
-        $("#past-searches").prepend($("<button>").attr("type", "button").attr("data-city", city).addClass("past text-muted list-group-item list-group-item-action").text(city));
+        $("#prevCity").prepend($("<button>").attr("type", "button").attr("data-city", city).addClass("past btn btn-outline-primary btn-block").text(city));
         $("#search").val("");
     }
 
