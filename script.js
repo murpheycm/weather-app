@@ -80,6 +80,16 @@ $(document).ready(function (){
         }
       }
 
+    // Clear Previously Searched cities
+    $("#clearBtn").on("click", function () {
+        localStorage.clear();
+        savedCities = [];
+        $("#prevCity").empty();
+        city = "";
+        init();
+      })
+    
+
     function init() {
         getToday();
     }
