@@ -44,7 +44,7 @@ $(document).ready(function (){
     }
 
     // Has city been searched before?
-    function previousCity () {
+    function checkPrev () {
         if ( $(`#prevCity button[data-city="${city}"]`).length ) { 
           $("#search").val("");
         } else {
@@ -89,6 +89,36 @@ $(document).ready(function (){
         city = "";
         init();
       })
+
+    function getToday() {
+        var apiCurrent = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`;
+
+        $.ajax({
+          url: apiCurrent,
+          method: "GET",
+          error: function () {
+            alert("City not found. Please check spelling and search again.");
+            $("#search").val("");
+          }
+            }).then(function (response) {
+              checkPrev();
+              weatherId = response.weather[0].id;
+              decodeWeatherId();
+        
+              $("#location").text(response.name);
+              $("#locationTemp").text(`${response.main.temp} °F`);
+              $("#locationHumidity").text(`${response.main.humidity} %`);
+              $("#locationWind").text(`${response.wind.speed} MPH`);
+              $("#today-img").attr("src", `./Assets/${weather}.png`).attr("alt", weather);
+        
+              lat = response.coord.lat;
+              lon = response.coord.lon;
+        
+              getUV();
+              getFiveDay();
+            });
+        }
+
     
 
     function init() {
