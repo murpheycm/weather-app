@@ -11,3 +11,5 @@ var currentHumidty= $("#humidity");
 var currentWindSpeed=$("#wind-speed");
 var currentUvIndex= $("#uv-index");
 
+//API key
+var APIKey="a0aca8a89948154a4182dcecc780b513";
