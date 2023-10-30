@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const apiKey = 'a0aca8a89948154a4182dcecc780b513';
+    const apiKey = '91ca803728e08fcbc1a0d92d460de95f';
     const searchForm = document.getElementById('sidebar');
     const locationInput = document.getElementById('location');
     const locationName = document.getElementById('userLocation');
