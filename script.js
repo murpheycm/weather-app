@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  const apiKey = "91ca803728e08fcbc1a0d92d460de95f";
+  let apiKey = "91ca803728e08fcbc1a0d92d460de95f";
   let city;
   let weatherId;
   let weather;
@@ -8,6 +8,7 @@ $(document).ready(function () {
   let uvIndex = "";
   let uv;
   let savedLocations= [];
+  moment().format();
   
 // SEARCH FUNCTIONS
   // Search button event listener
@@ -88,20 +89,20 @@ $(document).ready(function () {
 
   // Five day forecast
   function getFiveDay() {
-    let apiFive = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly,minutely,current&appid=${apiKey}&units=imperial`
+    let apiFive = `https://cors-anywhere.herokuapp.com/https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=hourly,minutely,current&appid=${apiKey}&units=imperial`;
     
     $.ajax({
       url: apiFive,
       method: "GET"
     }).then(function (response) {
-      for (let i = 0; i < 5; i++) {
-        let unixTime = response.daily[i].dt
-        $(`#day${i}`).text(moment.unix(unixTime).format('l'))
+      for (var i = 0; i < 5; i++) {
+        let unixTime = response.daily[i].dt;
+        $(`#day${i}`).text(moment.unix(unixTime).format('l'));
         $(`#temp${i}`).text(`${response.daily[i].temp.day} °F`);
         $(`#hum${i}`).text(`${response.daily[i].humidity} %`);
         weatherId = response.daily[i].weather[0].id
         dataCases();
-        $(`#img${i}`).attr("src", `./Assets/${weather}.png`).attr("alt", weather)
+        $(`#img${i}`).attr("src", `./images/${weather}.png`).attr("alt", weather)
       }
     })
   }
