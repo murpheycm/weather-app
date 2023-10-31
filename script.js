@@ -8,20 +8,13 @@ $(document).ready(function () {
   let uvIndex = "";
   let uv;
   let savedLocations= [];
-
-  loadLocations();
-
-  init();
-
   
-  // SEARCH -----------------------------------------------------------------------
 
-  // Listen for search btn click
-
-  $("#searchBtn").on("click", function () {
+  // Search button event listener
+  $("#searchBtn").on("click", function (event) {
     event.preventDefault();
     if ($("#search").val() !== "") {
-      let city = $("#search").val().trim();
+      city = $("#search").val().trim();
     }
     weatherToday();
   });
@@ -33,12 +26,13 @@ $(document).ready(function () {
   }
 
   // Previously searched button event listener
-  $("#prevLocation").on("click",".past",function () {
+  $("#prevLocation").on("click",".past",function (event) {
     event.preventDefault();
-    let city = $(this).attr("data-city");
+    city = $(this).attr("data-city");
     weatherToday();
   });
 
+  // Review search history upon new search
   function reviewPrev () {
     if ( $(`#prevLocation button[data-city="${city}"]`).length ) { 
       $("#search").val("");
@@ -50,10 +44,7 @@ $(document).ready(function () {
   }
   
 
-  // TODAY -----------------------------------------------------------------------
-
-
-  // Get today's weather 
+  // Today's weather 
   function weatherToday() {
     let apiCurrent = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`;
 
@@ -69,7 +60,7 @@ $(document).ready(function () {
       weatherId = response.weather[0].id;
       dataCases();
 
-      $("#location").text(response.name);
+      $("#city").text(response.name);
       $("#temp").text(`${response.main.temp} °F`);
       $("#hum").text(`${response.main.humidity} %`);
       $("#wind").text(`${response.wind.speed} MPH`);
@@ -95,11 +86,11 @@ $(document).ready(function () {
     })
   }
 
-  // FIVE DAY -----------------------------------------------------------------------
 
-  
+  // Five day forecast
   function getFiveDay() {
     let apiFive = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly,minutely,current&appid=${apiKey}&units=imperial`
+    
     $.ajax({
       url: apiFive,
       method: "GET"
@@ -200,5 +191,9 @@ $(document).ready(function () {
   function init() {
     weatherToday();
   }
+
+  loadLocations();
+
+  init();
 
 });
