@@ -9,7 +9,7 @@ $(document).ready(function () {
   let uv;
   let savedLocations= [];
   
-
+// SEARCH FUNCTIONS
   // Search button event listener
   $("#searchBtn").on("click", function (event) {
     event.preventDefault();
@@ -43,7 +43,7 @@ $(document).ready(function () {
     }
   }
   
-
+// FORECASTS
   // Today's weather 
   function weatherToday() {
     let apiCurrent = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`;
@@ -64,7 +64,7 @@ $(document).ready(function () {
       $("#temp").text(`${response.main.temp} °F`);
       $("#hum").text(`${response.main.humidity} %`);
       $("#wind").text(`${response.wind.speed} MPH`);
-      $("#today-img").attr("src", `./Assets/${weather}.png`).attr("alt", weather);
+      $("#today-img").attr("src", `./images/${weather}.png`).attr("alt", weather);
 
       lat = response.coord.lat;
       lon = response.coord.lon;
@@ -85,7 +85,6 @@ $(document).ready(function () {
       $("#uv").text(uvIndex).css("background-color", uv);
     })
   }
-
 
   // Five day forecast
   function getFiveDay() {
@@ -108,8 +107,7 @@ $(document).ready(function () {
   }
 
 
-  // WEATHER DECODERS -----------------------------------------------------------------------
-
+// FORECAST EDITORS
   // Change img for weather 
   function dataCases() {
     switch (true) {
@@ -123,13 +121,13 @@ $(document).ready(function () {
         weather = "Snow";
         break;
       case (weatherId > 699 && weatherId < 799):
-        weather = "Atmostphere";
+        weather = "Atmosphere";
         break;
       case weatherId === 800:
         weather = "Clear";
         break;
       case weatherId > 800:
-        weather = "Clouds"
+        weather = "Cloudy"
     }
   }
 
@@ -154,9 +152,8 @@ $(document).ready(function () {
   }
 
 
-  // LOCAL STORAGE -----------------------------------------------------------------------
 
-  // Load Cities
+  // Load locations
   function loadLocations() {
     let storedLocations = JSON.parse(localStorage.getItem("cities"));
     if (storedLocations !== null) {
@@ -170,18 +167,17 @@ $(document).ready(function () {
 
   function renderLocations() {
     for (let i = 0; i < savedLocations.length; i++) {
-      let city = savedLocations[i];
+      city = savedLocations[i];
       addLocation();
     }
   }
 
   // Clear Storage 
-
   $("#clear").on("click", function () {
     localStorage.clear();
     savedLocations = [];
     $("#prevLocation").empty();
-    let city = "Richmond";
+    city = "Richmond";
     init();
   })
 
