@@ -18,20 +18,21 @@
     <main class="container-fluid">
     <div class="main-row row">
       <!-- Search Container -->
-      <div class="search-column col-md-2 p-2 d-flex flex-column justify-content-start">
+      <div class="search-column col-md-2 p-5 d-flex flex-column justify-content-start">
         <form class="form-inline my-2 my-lg-0 m-2 row">
-          <input id="search" class="form-control col-9" type="search" placeholder="City, State" aria-label="Search">
+          <input id="search" class="form-control col-9" type="search" placeholder="City Name" aria-label="Search">
           <button id="searchBtn" class="btn btn-outline-warning col-3 my-2 my-sm-0" type="submit">Search</button>
         </form>
+        <hr>
         <!-- Previous Locations -->
         <ul id="prevLocation" class="list-group p-2"></ul>
         <button type="button" id="clear" class="btn btn-outline-warning m-2">Clear Past Searches</button>
       </div>
 
-      <div class="main-weather p-2 col">
-        <div class="container-fluid">
+      <div class="main-weather p-5 col">
+        <!-- <div class="container-fluid"> -->
           <!-- Today's Report-->
-          <div class="report">
+          <div class="report" id="today-weather">
             <h3>Today:</h3>
             <div class="card">
               <div class="card-body row">
@@ -40,18 +41,23 @@
                 </div>
                 <div class="col-9 d-flex flex-column justify-content-around">
                   <div><h3 id="city"></h3></div>
-                  <div>Temperature: <span id="temp"></span></div>
-                  <div>Humidity: <span id="hum"></span></div>
-                  <div>Wind Speed: <span id="wind"></span></div>
+                  <div>Temperature: <span id="temp"></span></div><br>
+                  <div>Humidity: <span id="hum"></span></div><br>
+                  <div>Wind Speed: <span id="wind"></span></div><br>
                   <div>UV Index: <span id="uv" class="p-1 rounded"></span></div>
                 </div>
               </div>
             </div>
+            <div class="image">
+              <img id="image-filler">
+            </div>
           </div>
+        <!-- </div> -->
+      
           <!-- Five Day  -->
-          <div class="report pt-3">
+          <div class="report pt-3 row">
+            <div class="card-deck">
             <h3>Five Day Forcast:</h3>
-            <div class="card-deck row">
               <div class="card">
                 <div class="card-body text-center">
                   <h5 class="card-title" id="day0"></h5>

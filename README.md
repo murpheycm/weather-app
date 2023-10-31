@@ -17,3 +17,4 @@
 ### https://murpheycm.github.io/weather-app/
 
 ## PICTURE
+![screenshot](./images/screenshot.JPG)

@@ -66,6 +66,8 @@ $(document).ready(function () {
       $("#hum").text(`${response.main.humidity} %`);
       $("#wind").text(`${response.wind.speed} MPH`);
       $("#today-img").attr("src", `./images/${weather}.png`).attr("alt", weather);
+      $("#image-filler").attr("src", `./images/filler/${weather}.png`).attr("alt", weather);
+
 
       lat = response.coord.lat;
       lon = response.coord.lon;
@@ -95,6 +97,7 @@ $(document).ready(function () {
       url: apiFive,
       method: "GET"
     }).then(function (response) {
+      weatherId = response.weather[0].id;
       for (var i = 0; i < 5; i++) {
         let unixTime = response.daily[i].dt;
         $(`#day${i}`).text(moment.unix(unixTime).format('l'));

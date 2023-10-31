@@ -5,23 +5,18 @@ h1 {
 }
 
 hr {
-  width:30%;
+  width:100%;
   text-align:left;
-  margin-left:0;
-}
-
-/* Divides the page into columns */
-.column {
-  float: left;
-/*   margin: 20px; */
 }
 
 .column.side {
   width: 25%;
+  margin-left: 5%;
 }
 
 .column.main {
   width: 75%;
+  margin-right: 5%;
 }
 
 /* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
@@ -31,20 +26,8 @@ hr {
   }
 }
 
-form #location {
-  border-radius: 2%;
+form #search {
   width: 100%;
-}
-
-#otherLocations {
-  width: 100%;
-  padding: 20px;
-  text-align: center;
-}
-
-#locationForecast {
-  padding: 20px;
-  border: 1px groove #808080;
 }
 
 
@@ -62,9 +45,9 @@ form #location {
   color: #808080;
   max-width: 15%;
   height: auto;
-  display: inline-block;
   margin: 20px;
   padding: 10px;
+  float: left;
 }
 
 img {
